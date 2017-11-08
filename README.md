@@ -1,2 +1,2 @@
-# battaglian
-battaglia navale testuale
+# battaglia navale
+runtime error causato nella funzione "navig"
