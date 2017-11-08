@@ -41,49 +41,34 @@ int navig(int gio[13][13], int i, int j, int k)
 		j--;
 		gio[i][j] = 3;
 	}
-	else
-	{
-		printf("Impossibile\n");
-		goto errore;
-	}
-	if (x == 'G' && j+3 < 13)
-	{
-		gio[i][j] = 3;
-		j++;
-		gio[i][j] = 3;
-		j++;
-		gio[i][j] = 3;
-	}
-	else
-	{
-		printf("Impossibile\n");
-		goto errore;
-	}
-	if (x == 'd' && i+3 < 13)
-	{
-		gio[i][j] = 3;
-		i++;
-		gio[i][j] = 3;
-		i++;
-		gio[i][j] = 3;
-	}
-	else
-	{
-		printf("Impossibile\n");
-		goto errore;
-	}
-	if (x == 's' && i-3 > 0)
-	{
-		gio[i][j] = 3;
-		i--;
-		gio[i][j] = 3;
-		i--;
-		gio[i][j] = 3;
-	}
-	else
-	{
-		printf("Impossibile\n");
-		goto errore;
-	}
+		else if (x == 'G' && j+3 < 13)
+		{
+			gio[i][j] = 3;
+			j++;
+			gio[i][j] = 3;
+			j++;
+			gio[i][j] = 3;
+		}
+			else if (x == 'd' && i+3 < 13)
+			{
+				gio[i][j] = 3;
+				i++;
+				gio[i][j] = 3;
+				i++;
+				gio[i][j] = 3;
+			}
+				else if (x == 's' && i-3 > 0)
+				{
+					gio[i][j] = 3;
+					i--;
+					gio[i][j] = 3;
+					i--;
+					gio[i][j] = 3;
+				}
+				else
+				{
+				printf("Impossibile\n");
+				goto errore;
+				}
 	return k++;
 }
