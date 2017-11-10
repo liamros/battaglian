@@ -6,14 +6,6 @@ int navig(int gio[][13], int i, int j, int k);
 
 int main ()
 {
-	for(int i = 1; i < 13; i++)           //assegna 0 a tutte le posiz
-	{
-		for(int j = 1; j<13; j++)
-		{
-			gio[i][j] = 0;
-			pc[i][j] = 0;
-		}
-	}
 //	while(k!=4)
 //	{
 		printf("Posizione nave da 3 posizioni\n");
@@ -23,6 +15,12 @@ int main ()
 		scanf("%d", &j);	
 		k = navig(gio, i, j, k);
 //	}
+	for(int i = 1; i < 13; i++)           //assegna 0 a tutte le posiz
+	{
+		for(int j = 1; j<13; j++)
+			printf("%d ", gio[i][j]);	
+		putchar('\n');
+	}
 }
 
 int navig(int gio[][13], int i, int j, int k)
@@ -33,7 +31,7 @@ int navig(int gio[][13], int i, int j, int k)
 	scanf("%c", &x);
 	if (x != 'S' && x != 'G' && x != 'd' && x != 's')
 		goto errore;
-	if (x == 'S' && j-3 > 0)
+	if (x == 's' && j-2 > 0)
 	{
 		gio[i][j] = 3;
 		j--;
@@ -41,7 +39,7 @@ int navig(int gio[][13], int i, int j, int k)
 		j--;
 		gio[i][j] = 3;
 	}
-		else if (x == 'G' && j+3 < 13)
+		else if (x == 'd' && j+2 < 13)
 		{
 			gio[i][j] = 3;
 			j++;
@@ -49,7 +47,7 @@ int navig(int gio[][13], int i, int j, int k)
 			j++;
 			gio[i][j] = 3;
 		}
-			else if (x == 'd' && i+3 < 13)
+			else if (x == 'G' && i+2 < 13)
 			{
 				gio[i][j] = 3;
 				i++;
@@ -57,7 +55,7 @@ int navig(int gio[][13], int i, int j, int k)
 				i++;
 				gio[i][j] = 3;
 			}
-				else if (x == 's' && i-3 > 0)
+				else if (x == 'S' && i-2 > 0)
 				{
 					gio[i][j] = 3;
 					i--;
