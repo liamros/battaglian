@@ -1,2 +1,2 @@
 # battaglian
-Risolto il runtime error
+Risolto il runtime error e perfezionata navig
