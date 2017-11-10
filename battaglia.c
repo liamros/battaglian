@@ -1,9 +1,8 @@
 #include <stdio.h>
 
 int gio[13][13], pc[13][13], i, j, k;
-int* g = gio[][];
 
-int navig(int* g, int i, int j, int k);
+int navig(int gio[][13], int i, int j, int k);
 
 int main ()
 {
@@ -22,11 +21,11 @@ int main ()
 		scanf("%d", &i);	
 		printf("Inserisci colonna (da 1 a 12) = ");
 		scanf("%d", &j);	
-		k = navig(g, i, j, k);
+		k = navig(gio, i, j, k);
 //	}
 }
 
-int navig(int* g, int i, int j, int k)
+int navig(int gio[][13], int i, int j, int k)
 {
 	char x;
 	errore : x = 0;
@@ -36,35 +35,35 @@ int navig(int* g, int i, int j, int k)
 		goto errore;
 	if (x == 'S' && j-3 > 0)
 	{
-		g[i][j] = 3;
+		gio[i][j] = 3;
 		j--;
-		g[i][j] = 3;
+		gio[i][j] = 3;
 		j--;
-		g[i][j] = 3;
+		gio[i][j] = 3;
 	}
 		else if (x == 'G' && j+3 < 13)
 		{
-			g[i][j] = 3;
+			gio[i][j] = 3;
 			j++;
-			g[i][j] = 3;
+			gio[i][j] = 3;
 			j++;
-			g[i][j] = 3;
+			gio[i][j] = 3;
 		}
 			else if (x == 'd' && i+3 < 13)
 			{
-				g[i][j] = 3;
+				gio[i][j] = 3;
 				i++;
-				g[i][j] = 3;
+				gio[i][j] = 3;
 				i++;
-				g[i][j] = 3;
+				gio[i][j] = 3;
 			}
 				else if (x == 's' && i-3 > 0)
 				{
-					g[i][j] = 3;
+					gio[i][j] = 3;
 					i--;
-					g[i][j] = 3;
+					gio[i][j] = 3;
 					i--;
-					g[i][j] = 3;
+					gio[i][j] = 3;
 				}
 				else
 				{
