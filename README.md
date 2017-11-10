@@ -1,2 +1,2 @@
 # battaglian
-Risolto il runtime error e perfezionata navig
+Viene stampato due volte la domanda nella funzione "navig"
