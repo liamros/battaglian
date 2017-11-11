@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-int gio[5][10], pc[5][10], i, j, k = 1;
+int gio[5][10], pc[5][10], i, j, k = 1, v;
 
 int sottomarino(int gio[][10], int i, int j, int k);
 int incrociatore(int gio[][10], int i, int j, int k);
@@ -10,6 +10,9 @@ int corazzata(int gio[][10], int i, int j, int k);
 
 int incrociatorePC(int g[][10], int i, int j, int k);
 int corazzataPC(int g[][10], int i, int j, int k);
+
+int attacco(int g[][10], int i, int j, int contatore);
+int attaccoPC(int g[][10], int i, int j, int contatore);
 
 int main ()
 {
@@ -20,7 +23,8 @@ int main ()
 		scanf("%d", &i);	
 		printf("Inserisci colonna (da 1 a 10) = ");
 		scanf("%d", &j);	
-		if (i < 1 || i > 5 || j < 1 || j > 10) continue;
+		if (i < 1 || i > 5 || j < 1 || j > 10) 
+			continue;
 		switch(k)
 		{
 			case 1 :
@@ -70,6 +74,30 @@ int main ()
 			printf("%d ", pc[i][j]);	
 		putchar('\n');
 	}
+	k = 0;
+
+	while(k != 7 && v != 7)
+	{
+		k = attacco(pc, i, j, k);
+		v = attaccoPC(gio, i, j, v);
+		for(int i = 1; i < 6; i++)
+		{
+			for(int j = 1; j<11; j++)
+				printf("%d ", gio[i][j]);	
+			putchar('\n');
+		}
+
+	putchar('\n');
+
+		for(int i = 1; i < 6; i++)
+		{
+			for(int j = 1; j<11; j++)
+				printf("%d ", pc[i][j]);	
+			putchar('\n');
+		}
+	}
+	
+	k == 7 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
 
 }
 
@@ -286,3 +314,84 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 	return k;
 }
 
+
+
+
+int attacco(int gio[][10], int i, int j, int k)
+{
+	errore : printf("Inserisci coordinate di attacco\n");
+	printf("Riga = ");
+	scanf("%d", &i);	
+	printf("Colonna = ");
+	scanf("%d", &j);
+	if (gio[i][j] == 20 || gio[i][j] == 100)
+	{
+		printf("NEGATIVO! ABBIAMO GIÀ SPARATO LÌ\n\n");
+		goto errore;
+	}
+	if (gio[i][j] != 1 && gio[i][j] != 2 && gio[i][j] != 3)
+	{
+		printf("BERSAGLIO MANCATO!\n\n");
+		gio[i][j] = 20;
+		return k;
+	}
+	if (gio[i][j] == 1)
+	{
+		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+	if (gio[i][j] == 2)
+	{
+		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+	if (gio[i][j] == 3)
+	{
+		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+}
+
+
+
+
+int attaccoPC(int gio[][10], int i, int j, int k)
+{
+	errore : i = rand() % 5 + 1;
+	j = rand() % 10 + 1;
+	if (gio[i][j] == 20 || gio[i][j] == 100)
+		goto errore;
+	if (gio[i][j] != 1 && gio[i][j] != 2 && gio[i][j] != 3)
+	{
+		printf("CI HANNO MANCATO!\n\n");
+		gio[i][j] = 20;
+		return k;
+	}
+	if (gio[i][j] == 1)
+	{
+		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+	if (gio[i][j] == 2)
+	{
+		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+	if (gio[i][j] == 3)
+	{
+		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
+		gio[i][j] = 100;
+		k++;
+		return k;
+	}
+}
