@@ -1,2 +1,2 @@
 # battaglian
-Viene stampato due volte la domanda nella funzione "navig"
+Scrivere funzione per la selezione randomica delle posizioni per il pc

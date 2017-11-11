@@ -2,20 +2,34 @@
 
 int gio[13][13], pc[13][13], i, j, k = 1, v;
 
-int navig(int gio[][13], int i, int j, int k, int verifica);
+int sottomarino(int gio[][13], int i, int j, int k);
+int incrociatore(int gio[][13], int i, int j, int k);
+int corazzata(int gio[][13], int i, int j, int k);
 
 int main ()
 {
 	while(k!=4)
 	{
-		printf("Posizione nave da %d posizioni\n\n", k);
+		printf("\nPosizione nave da %d posizioni\n\n", k);
 		printf("Inserisci riga (da 1 a 12) = ");
 		scanf("%d", &i);	
 		printf("Inserisci colonna (da 1 a 12) = ");
 		scanf("%d", &j);	
-		putchar('\n');
-		k = navig(gio, i, j, k, v);
-		v++;					//v necessaria in navig
+		if (i < 1 || i > 12 || j < 1 || j > 12) continue;
+		switch(k)
+		{
+			case 1 :
+			k = sottomarino(gio, i, j, k);
+			break;
+
+			case 2 :
+			k = incrociatore(gio, i, j, k);
+			break;
+
+			case 3 :
+			k = corazzata(gio, i, j, k);
+			break;
+		}
 	}
 	for(int i = 1; i < 13; i++)
 	{
@@ -25,50 +39,116 @@ int main ()
 	}
 }
 
-int navig(int gio[][13], int i, int j, int k, int v)
+
+
+
+int sottomarino(int gio[][13], int i, int j, int k)
 {
-	if (v == 0)
+	gio[i][j] = k;
+	k++;
+	return k;
+}
+
+
+
+
+int incrociatore(int gio[][13], int i, int j, int k)
+{
+	if (gio[i][j] != 0)
 	{
-		gio[i][j] = k;
-		k++;
+		printf("\nPosizione occupata da un'altra nave, sceglierne un'altra\n\n");
 		return k;
 	}
 	char x;
-	int const r = i, c = j; 	//sono necessarie altrimenti gli if cambiano ad ogni iterazione 
 	errore : x = 0;
 	printf("Posizionare la nave verso su (S), giù (G), destra (d), o sinistra (s)? ");
-	scanf("%c", &x);
-	putchar('\n');
-	if (x != 'S' && x != 'G' && x != 'd' && x != 's')
-		goto errore;
-	for (int t = 0; t < k; t++)	//indica quante posiz occupano le navi
+	scanf("\n%c", &x);
+	if(x == 's' && gio[i][j] == 0 && gio[i][j-1] == 0)		//la k varia in base al tipo di nave
 	{
-		if((x == 's' && c-v > 0) && ((v == 1 && gio[r][c-1] == 0) || (v == 2 && gio[r][c-1] == 0 && gio[r][c-2] == 0)))
-		{
-			gio[i][j] = k;  //r sostituisce j, perchè j avrà effetti collaterali
-			j--;
-		}
-		else if((x == 'd' && c+v < 13) && ((v == 1 && gio[r][c+1] == 0) || (v == 2 && gio[r][c+1] == 0 && gio[r][c+2] == 0)))
-		{				//la v verifica se la nave esce dalla mappa
-			gio[i][j] = k;  	//e varia in base al tipo di nave	
-			j++;
-		}
-		else if((x == 'G' && r+v < 13) && ((v == 1 && gio[r+1][c] == 0) || (v == 2 && gio[r+1][c] == 0 && gio[r+2][c] == 0)))
-		{
-			gio[i][j] = k;
-			i++;
-		}
-		else if((x == 'S' && r-v > 0) && ((v == 1 && gio[r-1][c] == 0) || (v == 2 && gio[r-1][c] == 0 && gio[r-2][c] == 0)))
-		{
-			gio[i][j] = k;		//gli if controllano il carattere e se le navi si sovrappongono
-			i--;
-		}
-			else
-			{
-				printf("Impossibile\n\n");
-				goto errore;
-			}
+		gio[i][j] = k;
+		j--;
+		gio[i][j] = k;
 	}
+		else if(x == 'd' && gio[i][j] == 0 && gio[i][j+1] == 0)
+		{			
+			gio[i][j] = k;  
+			j++;
+			gio[i][j] = k;  
+		}
+			else if(x == 'G' && gio[i][j] == 0 && gio[i+1][j] == 0)
+			{
+				gio[i][j] = k;
+				i++;
+				gio[i][j] = k;
+			}
+				else if(x == 'S' && gio[i][j] == 0 && gio[i-1][j] == 0)
+				{
+					gio[i][j] = k;		//gli if controllano il carattere e se le navi si sovrappongono
+					i--;
+					gio[i][j] = k;
+				}
+					else
+					{
+						printf("Impossibile\n\n");
+						goto errore;
+					}
+	k++;
+	return k;
+}
+
+
+
+
+
+
+int corazzata(int gio[][13], int i, int j, int k)
+{
+	if (gio[i][j] != 0)
+	{
+		printf("\nPosizione occupata da un'altra nave, sceglierne un'altra\n\n");
+		return k;
+	}
+	char x;
+	errore : x = 0;
+	printf("Posizionare la nave verso su (S), giù (G), destra (d), o sinistra (s)? ");
+	scanf("\n%c", &x);
+	if(x == 's' && gio[i][j] == 0 && gio[i][j-1] == 0 && gio[i][j-2] == 0)
+	{
+		gio[i][j] = k;
+		j--;
+		gio[i][j] = k;
+		j--;
+		gio[i][j] = k;
+	}
+		else if(x == 'd' && gio[i][j] == 0 && gio[i][j+1] == 0 && gio[i][j+2] == 0)
+		{			
+			gio[i][j] = k;  
+			j++;
+			gio[i][j] = k;  
+			j++;
+			gio[i][j] = k;  
+		}
+			else if(x == 'G' && gio[i][j] == 0 && gio[i+1][j] == 0 && gio[i+2][j] == 0)
+			{
+				gio[i][j] = k;
+				i++;
+				gio[i][j] = k;
+				i++;
+				gio[i][j] = k;
+			}
+				else if(x == 'S' && gio[i][j] == 0 && gio[i-1][j] == 0 && gio[i-2][j] == 0)
+				{
+					gio[i][j] = k;	
+					i--;
+					gio[i][j] = k;
+					i--;
+					gio[i][j] = k;
+				}
+					else
+					{
+						printf("Impossibile\n\n");
+						goto errore;
+					}
 	k++;
 	return k;
 }
