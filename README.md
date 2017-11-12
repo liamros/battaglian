@@ -1,2 +1,2 @@
 # battaglian
-Manca solo la parte "grafica"
+Programma sostanzialmente finito.

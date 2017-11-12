@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 int gio[6][11], pc[6][11], i, j, k = 1, v;
-//char ag[5][10], bp[5][10], z = '1';
+char ag[6][11], bp[6][11], z = 'O';
 
 int sottomarino(int gio[][11], int i, int j, int k);
 int incrociatore(int gio[][11], int i, int j, int k);
@@ -13,11 +13,11 @@ int corazzata(int gio[][11], int i, int j, int k);
 int incrociatorePC(int g[][11], int i, int j, int k);
 int corazzataPC(int g[][11], int i, int j, int k);
 
-int attacco(int g[][11], int i, int j, int contatore);
-int attaccoPC(int g[][11], int i, int j, int contatore);
+int attacco(int g[][11], char graficap[][11], int i, int j, int contatore);
+int attaccoPC(int g[][11], char grafica[][11], int i, int j, int contatore);
 
-//void grafica(char graficag[][10], char graficap[][10], char z);
-//void grafica2(char graficag[][10], char graficap[][10], int g[][10], int p[][10], int i, int j);
+void grafica(char graficag[][11], char graficap[][11], char z);
+void grafica2(char graficag[][11], char graficap[][11]);
 
 int main ()
 {
@@ -66,51 +66,24 @@ int main ()
 			break;
 		}
 	}
-	for(int i = 1; i < 6; i++)
-	{
-		for(int j = 1; j<11; j++)
-			printf("%d ", gio[i][j]);	
-		putchar('\n');
-		usleep(100 * 1000);
-	}
-	putchar('\n');
-	for(int i = 1; i < 6; i++)
-	{
-		for(int j = 1; j<11; j++)
-			printf("%d ", pc[i][j]);	
-		putchar('\n');
-		usleep(100 * 1000);
-	}
+
+	grafica(ag, bp, z);
+
 	k = 0;
 
 	while(k != 6 && v != 6)
 	{
-		k = attacco(pc, i, j, k);
+		k = attacco(pc, bp, i, j, k);
 
 		if (k == 50)
 			break;
 
-		v = attaccoPC(gio, i, j, v);
+		v = attaccoPC(gio, ag, i, j, v);
 
 		sleep(1);
 
-		for(int i = 1; i < 6; i++)
-		{
-			for(int j = 1; j<11; j++)
-				printf("%d ", gio[i][j]);
-			usleep(100 * 1000);	
-			putchar('\n');
-		}
+		grafica2(ag, bp);
 
-		putchar('\n');
-
-		for(int i = 1; i < 6; i++)
-		{
-			for(int j = 1; j<11; j++)
-				printf("%d ", pc[i][j]);	
-			usleep(100 * 1000);
-			putchar('\n');
-		}
 	}
 	
 	k == 6 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
@@ -333,12 +306,14 @@ int corazzataPC(int gio[][11], int i, int j, int k)
 
 
 
-int attacco(int gio[][11], int i, int j, int k)
+int attacco(int gio[][11], char bp[][11], int i, int j, int k)
 {
+	char z = ' ';
+	char m = 'C';
 	errore : printf("Inserisci coordinate di attacco\n");
-	printf("Riga = ");
+	printf("Riga (1 a 5) = ");
 	scanf("%d", &i);	
-	printf("Colonna = ");
+	printf("Colonna (1 a 10) = ");
 	scanf("%d", &j);
 	putchar('\n');
 	sleep(1);
@@ -356,12 +331,14 @@ int attacco(int gio[][11], int i, int j, int k)
 	{
 		printf("BERSAGLIO MANCATO!\n\n");
 		gio[i][j] = 20;
+		bp[i][j] = z;
 		return k;
 	}
 	if (gio[i][j] == 1)
 	{
 		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
 		gio[i][j] = 100;
+		bp[i][j] = m;
 		k++;
 		return k;
 	}
@@ -369,6 +346,7 @@ int attacco(int gio[][11], int i, int j, int k)
 	{
 		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
 		gio[i][j] = 100;
+		bp[i][j] = m;
 		k++;
 		return k;
 	}
@@ -376,6 +354,7 @@ int attacco(int gio[][11], int i, int j, int k)
 	{
 		printf("CENTRO! BERSAGLIO COLPITO!\n\n");
 		gio[i][j] = 100;
+		bp[i][j] = m;
 		k++;
 		return k;
 	}
@@ -384,8 +363,10 @@ int attacco(int gio[][11], int i, int j, int k)
 
 
 
-int attaccoPC(int gio[][11], int i, int j, int k)
+int attaccoPC(int gio[][11], char ag[][11], int i, int j, int k)
 {
+	char z = ' ';
+	char m = 'C';
 	errore : i = rand() % 5 + 1;
 	j = rand() % 10 + 1;
 	if (gio[i][j] == 20 || gio[i][j] == 100)
@@ -395,12 +376,14 @@ int attaccoPC(int gio[][11], int i, int j, int k)
 	{
 		printf("CI HANNO MANCATO!\n\n");
 		gio[i][j] = 20;
+		ag[i][j] = z;
 		return k;
 	}
 	if (gio[i][j] == 1)
 	{
 		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
 		gio[i][j] = 100;
+		ag[i][j] = m;
 		k++;
 		return k;
 	}
@@ -408,6 +391,7 @@ int attaccoPC(int gio[][11], int i, int j, int k)
 	{
 		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
 		gio[i][j] = 100;
+		ag[i][j] = m;
 		k++;
 		return k;
 	}
@@ -415,6 +399,7 @@ int attaccoPC(int gio[][11], int i, int j, int k)
 	{
 		printf("CODICE ROSSO CI HANNO COLPITO!\n\n");
 		gio[i][j] = 100;
+		ag[i][j] = m;
 		k++;
 		return k;
 	}
@@ -423,4 +408,57 @@ int attaccoPC(int gio[][11], int i, int j, int k)
 
 
 
+void grafica(char ag[][11], char bp[][11], char z)
+{	
+	for(int i = 1; i < 6; i++)
+		for(int j = 1; j < 11; j++)
+		{
+			ag[i][j] = z;
+			bp[i][j] = z;
+		}
+	printf("\nTU\n\n");
 
+	for(int i = 1; i < 6; i++)
+	{
+		for(int j = 1; j<11; j++)
+			printf("%c ", ag[i][j]);	
+		putchar('\n');
+		usleep(100 * 1000);
+	}
+	putchar('\n');
+	printf("\nAVVERSARIO\n\n");
+	for(int i = 1; i < 6; i++)
+	{
+		for(int j = 1; j<11; j++)
+			printf("%c ", bp[i][j]);	
+		putchar('\n');
+		usleep(100 * 1000);
+	}
+	putchar('\n');
+}
+
+
+
+
+void grafica2(char ag[][11], char bp[][11])
+{
+	printf("\nTU\n\n");
+	for(int i = 1; i < 6; i++)
+	{
+		for(int j = 1; j<11; j++)
+			printf("%c ", ag[i][j]);
+		usleep(100 * 1000);	
+		putchar('\n');
+	}
+
+	putchar('\n');
+	printf("\nAVVERSARIO\n\n");
+	for(int i = 1; i < 6; i++)
+	{
+		for(int j = 1; j<11; j++)
+			printf("%c ", bp[i][j]);	
+		usleep(100 * 1000);
+		putchar('\n');
+	}
+	putchar('\n');
+}
