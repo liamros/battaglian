@@ -1,6 +1,7 @@
-#include <stdio.h>		//i bug stanno nelle funzioni incrociatorePC e corazzataPC
+#include <stdio.h>		
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 int gio[6][11], pc[6][11], i, j, k = 1, v;
 //char ag[5][10], bp[5][10], z = '1';
@@ -70,6 +71,7 @@ int main ()
 		for(int j = 1; j<11; j++)
 			printf("%d ", gio[i][j]);	
 		putchar('\n');
+		usleep(100 * 1000);
 	}
 	putchar('\n');
 	for(int i = 1; i < 6; i++)
@@ -77,6 +79,7 @@ int main ()
 		for(int j = 1; j<11; j++)
 			printf("%d ", pc[i][j]);	
 		putchar('\n');
+		usleep(100 * 1000);
 	}
 	k = 0;
 
@@ -89,11 +92,13 @@ int main ()
 
 		v = attaccoPC(gio, i, j, v);
 
+		sleep(1);
 
 		for(int i = 1; i < 6; i++)
 		{
 			for(int j = 1; j<11; j++)
-				printf("%d ", gio[i][j]);	
+				printf("%d ", gio[i][j]);
+			usleep(100 * 1000);	
 			putchar('\n');
 		}
 
@@ -103,6 +108,7 @@ int main ()
 		{
 			for(int j = 1; j<11; j++)
 				printf("%d ", pc[i][j]);	
+			usleep(100 * 1000);
 			putchar('\n');
 		}
 	}
@@ -334,6 +340,8 @@ int attacco(int gio[][11], int i, int j, int k)
 	scanf("%d", &i);	
 	printf("Colonna = ");
 	scanf("%d", &j);
+	putchar('\n');
+	sleep(1);
 	if (i < 1 || i > 5 || j < 1 || j > 10)
 	{
 		k = 50;
@@ -382,6 +390,7 @@ int attaccoPC(int gio[][11], int i, int j, int k)
 	j = rand() % 10 + 1;
 	if (gio[i][j] == 20 || gio[i][j] == 100)
 		goto errore;
+	sleep(1);
 	if (gio[i][j] != 1 && gio[i][j] != 2 && gio[i][j] != 3)
 	{
 		printf("CI HANNO MANCATO!\n\n");
