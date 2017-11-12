@@ -1,18 +1,22 @@
-#include <stdio.h>
+#include <stdio.h>		//i bug stanno nelle funzioni incrociatorePC e corazzataPC
 #include <stdlib.h>
 #include <time.h>
 
-int gio[5][10], pc[5][10], i, j, k = 1, v;
+int gio[6][11], pc[6][11], i, j, k = 1, v;
+//char ag[5][10], bp[5][10], z = '1';
 
-int sottomarino(int gio[][10], int i, int j, int k);
-int incrociatore(int gio[][10], int i, int j, int k);
-int corazzata(int gio[][10], int i, int j, int k);
+int sottomarino(int gio[][11], int i, int j, int k);
+int incrociatore(int gio[][11], int i, int j, int k);
+int corazzata(int gio[][11], int i, int j, int k);
 
-int incrociatorePC(int g[][10], int i, int j, int k);
-int corazzataPC(int g[][10], int i, int j, int k);
+int incrociatorePC(int g[][11], int i, int j, int k);
+int corazzataPC(int g[][11], int i, int j, int k);
 
-int attacco(int g[][10], int i, int j, int contatore);
-int attaccoPC(int g[][10], int i, int j, int contatore);
+int attacco(int g[][11], int i, int j, int contatore);
+int attaccoPC(int g[][11], int i, int j, int contatore);
+
+//void grafica(char graficag[][10], char graficap[][10], char z);
+//void grafica2(char graficag[][10], char graficap[][10], int g[][10], int p[][10], int i, int j);
 
 int main ()
 {
@@ -76,10 +80,16 @@ int main ()
 	}
 	k = 0;
 
-	while(k != 7 && v != 7)
+	while(k != 6 && v != 6)
 	{
 		k = attacco(pc, i, j, k);
+
+		if (k == 50)
+			break;
+
 		v = attaccoPC(gio, i, j, v);
+
+
 		for(int i = 1; i < 6; i++)
 		{
 			for(int j = 1; j<11; j++)
@@ -87,7 +97,7 @@ int main ()
 			putchar('\n');
 		}
 
-	putchar('\n');
+		putchar('\n');
 
 		for(int i = 1; i < 6; i++)
 		{
@@ -97,14 +107,14 @@ int main ()
 		}
 	}
 	
-	k == 7 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
+	k == 6 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
 
 }
 
 
 
 
-int sottomarino(int gio[][10], int i, int j, int k)
+int sottomarino(int gio[][11], int i, int j, int k)
 {
 	gio[i][j] = k;
 	k++;
@@ -114,7 +124,7 @@ int sottomarino(int gio[][10], int i, int j, int k)
 
 
 
-int incrociatore(int gio[][10], int i, int j, int k)
+int incrociatore(int gio[][11], int i, int j, int k)
 {
 	if (gio[i][j] != 0)
 	{
@@ -125,25 +135,25 @@ int incrociatore(int gio[][10], int i, int j, int k)
 	errore : x = 0;
 	printf("Posizionare la nave verso su (S), giù (G), destra (d), o sinistra (s)? ");
 	scanf("\n%c", &x);
-	if(x == 's' && gio[i][j] == 0 && gio[i][j-1] == 0)		//la k varia in base al tipo di nave
+	if(x == 's' && j-1 > 0 && gio[i][j] == 0 && gio[i][j-1] == 0)		//la k varia in base al tipo di nave
 	{
 		gio[i][j] = k;
 		j--;
 		gio[i][j] = k;
 	}
-		else if(x == 'd' && gio[i][j] == 0 && gio[i][j+1] == 0)
+		else if(x == 'd' && j+1 < 11 && gio[i][j] == 0 && gio[i][j+1] == 0)
 		{			
 			gio[i][j] = k;  
 			j++;
 			gio[i][j] = k;  
 		}
-			else if(x == 'G' && gio[i][j] == 0 && gio[i+1][j] == 0)
+			else if(x == 'G' && i+1 < 6 && gio[i][j] == 0 && gio[i+1][j] == 0)
 			{
 				gio[i][j] = k;
 				i++;
 				gio[i][j] = k;
 			}
-				else if(x == 'S' && gio[i][j] == 0 && gio[i-1][j] == 0)
+				else if(x == 'S' && i-1> 0 && gio[i][j] == 0 && gio[i-1][j] == 0)
 				{
 					gio[i][j] = k;		//gli if controllano il carattere e se le navi si sovrappongono
 					i--;
@@ -163,7 +173,7 @@ int incrociatore(int gio[][10], int i, int j, int k)
 
 
 
-int corazzata(int gio[][10], int i, int j, int k)
+int corazzata(int gio[][11], int i, int j, int k)
 {
 	if (gio[i][j] != 0)
 	{
@@ -182,7 +192,7 @@ int corazzata(int gio[][10], int i, int j, int k)
 		j--;
 		gio[i][j] = k;
 	}
-		else if(x == 'd' && gio[i][j] == 0 && gio[i][j+1] == 0 && gio[i][j+2] == 0)
+		else if(x == 'd' && j+2 < 11 && gio[i][j] == 0 && gio[i][j+1] == 0 && gio[i][j+2] == 0)
 		{			
 			gio[i][j] = k;  
 			j++;
@@ -190,7 +200,7 @@ int corazzata(int gio[][10], int i, int j, int k)
 			j++;
 			gio[i][j] = k;  
 		}
-			else if(x == 'G' && gio[i][j] == 0 && gio[i+1][j] == 0 && gio[i+2][j] == 0)
+			else if(x == 'G' && i+2 < 6 && gio[i][j] == 0 && gio[i+1][j] == 0 && gio[i+2][j] == 0)
 			{
 				gio[i][j] = k;
 				i++;
@@ -198,7 +208,7 @@ int corazzata(int gio[][10], int i, int j, int k)
 				i++;
 				gio[i][j] = k;
 			}
-				else if(x == 'S' && gio[i][j] == 0 && gio[i-1][j] == 0 && gio[i-2][j] == 0)
+				else if(x == 'S' && i-2 > 0 && gio[i][j] == 0 && gio[i-1][j] == 0 && gio[i-2][j] == 0)
 				{
 					gio[i][j] = k;	
 					i--;
@@ -219,7 +229,7 @@ int corazzata(int gio[][10], int i, int j, int k)
 
 
 
-int incrociatorePC(int gio[][10], int i, int j, int k)
+int incrociatorePC(int gio[][11], int i, int j, int k)
 {
 	if (gio[i][j] != 0)
 	{
@@ -229,25 +239,25 @@ int incrociatorePC(int gio[][10], int i, int j, int k)
 	errore : x = 0;
 	srand(time(NULL));
 	x = rand() % 4 + 1;
-	if(x == 1 && gio[i][j] == 0 && gio[i][j-1] == 0)
+	if(x == 1 && j-1 > 0 && gio[i][j] == 0 && gio[i][j-1] == 0)
 	{
 		gio[i][j] = k;
 		j--;
 		gio[i][j] = k;
 	}
-		else if(x == 2 && gio[i][j] == 0 && gio[i][j+1] == 0)
+		else if(x == 2 && j+1 < 11 && gio[i][j] == 0 && gio[i][j+1] == 0)
 		{			
 			gio[i][j] = k;  
 			j++;
 			gio[i][j] = k;  
 		}
-			else if(x == 3 && gio[i][j] == 0 && gio[i+1][j] == 0)
+			else if(x == 3 && i+1 < 6 && gio[i][j] == 0 && gio[i+1][j] == 0)
 			{
 				gio[i][j] = k;
 				i++;
 				gio[i][j] = k;
 			}
-				else if(x == 4 && gio[i][j] == 0 && gio[i-1][j] == 0)
+				else if(x == 4 && i-1 > 0 && gio[i][j] == 0 && gio[i-1][j] == 0)
 				{
 					gio[i][j] = k;
 					i--;
@@ -264,7 +274,7 @@ int incrociatorePC(int gio[][10], int i, int j, int k)
 
 
 
-int corazzataPC(int gio[][10], int i, int j, int k)
+int corazzataPC(int gio[][11], int i, int j, int k)
 {
 	if (gio[i][j] != 0)
 	{
@@ -274,7 +284,7 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 	errore : x = 0;
 	srand(time(NULL));
 	x = rand() % 4 + 1;
-	if(x == 1 && gio[i][j] == 0 && gio[i][j-1] == 0 && gio[i][j-2] == 0)
+	if(x == 1 && j-2 > 0 && gio[i][j] == 0 && gio[i][j-1] == 0 && gio[i][j-2] == 0)
 	{
 		gio[i][j] = k;
 		j--;
@@ -282,7 +292,7 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 		j--;
 		gio[i][j] = k;
 	}
-		else if(x == 2 && gio[i][j] == 0 && gio[i][j+1] == 0 && gio[i][j+2] == 0)
+		else if(x == 2 && j+2 < 11 && gio[i][j] == 0 && gio[i][j+1] == 0 && gio[i][j+2] == 0)
 		{			
 			gio[i][j] = k;  
 			j++;
@@ -290,7 +300,7 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 			j++;
 			gio[i][j] = k;  
 		}
-			else if(x == 3 && gio[i][j] == 0 && gio[i+1][j] == 0 && gio[i+2][j] == 0)
+			else if(x == 3 && i+2 < 6 && gio[i][j] == 0 && gio[i+1][j] == 0 && gio[i+2][j] == 0)
 			{
 				gio[i][j] = k;
 				i++;
@@ -298,7 +308,7 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 				i++;
 				gio[i][j] = k;
 			}
-				else if(x == 4 && gio[i][j] == 0 && gio[i-1][j] == 0 && gio[i-2][j] == 0)
+				else if(x == 4 && i-2 > 0 && gio[i][j] == 0 && gio[i-1][j] == 0 && gio[i-2][j] == 0)
 				{
 					gio[i][j] = k;	
 					i--;
@@ -317,13 +327,18 @@ int corazzataPC(int gio[][10], int i, int j, int k)
 
 
 
-int attacco(int gio[][10], int i, int j, int k)
+int attacco(int gio[][11], int i, int j, int k)
 {
 	errore : printf("Inserisci coordinate di attacco\n");
 	printf("Riga = ");
 	scanf("%d", &i);	
 	printf("Colonna = ");
 	scanf("%d", &j);
+	if (i < 1 || i > 5 || j < 1 || j > 10)
+	{
+		k = 50;
+		return k;
+	}
 	if (gio[i][j] == 20 || gio[i][j] == 100)
 	{
 		printf("NEGATIVO! ABBIAMO GIÀ SPARATO LÌ\n\n");
@@ -361,7 +376,7 @@ int attacco(int gio[][10], int i, int j, int k)
 
 
 
-int attaccoPC(int gio[][10], int i, int j, int k)
+int attaccoPC(int gio[][11], int i, int j, int k)
 {
 	errore : i = rand() % 5 + 1;
 	j = rand() % 10 + 1;
@@ -395,3 +410,8 @@ int attaccoPC(int gio[][10], int i, int j, int k)
 		return k;
 	}
 }
+
+
+
+
+

@@ -1,2 +1,2 @@
 # battaglian
-Quando vengono stampate le matrici alcuni numeri casuali vengono mostrati
+Manca solo la parte "grafica"
