@@ -82,8 +82,8 @@ int main ()
 
 		sleep(1);
 		grafica2(ag, bp);
-		printf("Il tuo avversario ti ha colpito %d volte\nTu lo hai colpito %d volte\n\n", v, k);
 		usleep(100 * 1000);
+		printf("Il tuo avversario ti ha colpito %d volte\nTu lo hai colpito %d volte\n\n", v, k);
 	}
 	sleep(1);	
 	k == 6 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
