@@ -81,13 +81,13 @@ int main ()
 		v = attaccoPC(gio, ag, i, j, v);
 
 		sleep(1);
-
 		grafica2(ag, bp);
-
+		printf("Il tuo avversario ti ha colpito %d volte\nTu lo hai colpito %d volte\n\n", v, k);
+		usleep(100 * 1000);
 	}
-	
+	sleep(1);	
 	k == 6 ? printf("\n\nHAI VINTO!\n\n") : printf("\n\nHai perso...\n\n");
-
+	return 0;
 }
 
 
@@ -309,7 +309,7 @@ int corazzataPC(int gio[][11], int i, int j, int k)
 int attacco(int gio[][11], char bp[][11], int i, int j, int k)
 {
 	char z = ' ';
-	char m = 'C';
+	char m = '#';
 	errore : printf("Inserisci coordinate di attacco\n");
 	printf("Riga (1 a 5) = ");
 	scanf("%d", &i);	
@@ -366,7 +366,7 @@ int attacco(int gio[][11], char bp[][11], int i, int j, int k)
 int attaccoPC(int gio[][11], char ag[][11], int i, int j, int k)
 {
 	char z = ' ';
-	char m = 'C';
+	char m = '#';
 	errore : i = rand() % 5 + 1;
 	j = rand() % 10 + 1;
 	if (gio[i][j] == 20 || gio[i][j] == 100)
